@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 接口的实现类 -->
+	<bean id="loginService" class="com.erye.service.LoginService"></bean>
+	<bean id="registService" class="com.erye.service.RegistService"></bean>
+	<bean id="fuckYouService" class="com.erye.service.FuckYouService"></bean>
+	<bean id="greetService" class="com.erye.service.GreetService"></bean>
+	<bean id="validationService" class="com.erye.service.ValidationService"></bean>
+
+	<dubbo:application name="provider"/>
+	
+	<!-- 注册中心的名字和地址 -->
+	<dubbo:registry protocol="zookeeper" address="192.168.0.110:2181"></dubbo:registry>
+	
+	<!-- 注册的协议 -->
+	<dubbo:protocol name="dubbo" port="20881" dispatcher="all" threadpool="fixed" threads="2"></dubbo:protocol>
+	<dubbo:protocol name="rmi" port="2088" dispatcher="all" threadpool="fixed" threads="2"></dubbo:protocol>
+	
+	<!-- 发布的服务 -->
+	<dubbo:service interface="com.erye.service.LoginServiceInter" ref="loginService" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.RegistServiceInter" ref="registService" protocol="rmi"></dubbo:service>
+	<dubbo:service interface="com.erye.service.FuckYouServiceInter" ref="fuckYouService" group="a" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.FuckYouServiceInter" ref="greetService" group="b" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.ValidationServiceInter" ref="validationService" validation="true" protocol="dubbo"></dubbo:service>
+	
+</beans>
