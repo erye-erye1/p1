@@ -11,15 +11,18 @@
 	<bean id="fuckYouService" class="com.erye.service.FuckYouService"></bean>
 	<bean id="greetService" class="com.erye.service.GreetService"></bean>
 	<bean id="validationService" class="com.erye.service.ValidationService"></bean>
+	<bean id="genericService" class="com.erye.service.GenericService"></bean>
+	<bean id="echoService" class="com.erye.service.EchoService"></bean>
+	<bean id="asyncService" class="com.erye.service.AsyncService"></bean>
 
 	<dubbo:application name="provider"/>
 	
 	<!-- 注册中心的名字和地址 -->
-	<dubbo:registry protocol="zookeeper" address="192.168.0.110:2181"></dubbo:registry>
+	<dubbo:registry protocol="zookeeper" address="10.5.96.104:2181"></dubbo:registry>
 	
 	<!-- 注册的协议 -->
-	<dubbo:protocol name="dubbo" port="20881" dispatcher="all" threadpool="fixed" threads="2"></dubbo:protocol>
-	<dubbo:protocol name="rmi" port="2088" dispatcher="all" threadpool="fixed" threads="2"></dubbo:protocol>
+	<dubbo:protocol name="dubbo" port="20881" dispatcher="all" threadpool="fixed" threads="5"></dubbo:protocol>
+	<dubbo:protocol name="rmi" port="2088" dispatcher="all" threadpool="fixed" threads="5"></dubbo:protocol>
 	
 	<!-- 发布的服务 -->
 	<dubbo:service interface="com.erye.service.LoginServiceInter" ref="loginService" protocol="dubbo"></dubbo:service>
@@ -27,5 +30,8 @@
 	<dubbo:service interface="com.erye.service.FuckYouServiceInter" ref="fuckYouService" group="a" protocol="dubbo"></dubbo:service>
 	<dubbo:service interface="com.erye.service.FuckYouServiceInter" ref="greetService" group="b" protocol="dubbo"></dubbo:service>
 	<dubbo:service interface="com.erye.service.ValidationServiceInter" ref="validationService" validation="true" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.inter.GenericServiceInter" ref="genericService" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.EchoServiceInter" ref="echoService" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.AsyncServiceInter" ref="asyncService" protocol="dubbo"></dubbo:service>
 	
 </beans>
