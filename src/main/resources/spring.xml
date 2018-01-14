@@ -14,11 +14,13 @@
 	<bean id="genericService" class="com.erye.service.GenericService"></bean>
 	<bean id="echoService" class="com.erye.service.EchoService"></bean>
 	<bean id="asyncService" class="com.erye.service.AsyncService"></bean>
+	<bean id="callbackService" class="com.erye.service.CallbackService"></bean>
+	<bean id="stubService" class="com.erye.service.StubService"></bean>
 
 	<dubbo:application name="provider"/>
 	
 	<!-- 注册中心的名字和地址 -->
-	<dubbo:registry protocol="zookeeper" address="10.5.96.104:2181"></dubbo:registry>
+	<dubbo:registry protocol="zookeeper" address="192.168.0.110:2181"></dubbo:registry>
 	
 	<!-- 注册的协议 -->
 	<dubbo:protocol name="dubbo" port="20881" dispatcher="all" threadpool="fixed" threads="5"></dubbo:protocol>
@@ -33,5 +35,11 @@
 	<dubbo:service interface="com.erye.inter.GenericServiceInter" ref="genericService" protocol="dubbo"></dubbo:service>
 	<dubbo:service interface="com.erye.service.EchoServiceInter" ref="echoService" protocol="dubbo"></dubbo:service>
 	<dubbo:service interface="com.erye.service.AsyncServiceInter" ref="asyncService" protocol="dubbo"></dubbo:service>
+	<dubbo:service interface="com.erye.service.CallbackServiceInter" ref="callbackService" protocol="dubbo">
+		<dubbo:method name="addListerner">
+			<dubbo:argument type="com.erye.service.CallbackListenerInter" callback="true"/>
+		</dubbo:method>
+	</dubbo:service>
+	<dubbo:service interface="com.erye.service.StubServiceInter" ref="stubService"></dubbo:service>
 	
 </beans>
